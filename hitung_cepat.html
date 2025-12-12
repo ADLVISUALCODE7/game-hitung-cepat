@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Hitung Cepat Penuh Animasi</title>
+    
+    <style>
+        /* --- MODIFIKASI CSS UNTUK ANIMASI DAN Z-INDEX --- */
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f7f7f7;
+            color: #333;
+            overflow: hidden; 
+            position: relative; /* Penting untuk posisi latar belakang */
+        }
+
+        /* Memastikan konten game berada di atas animasi */
+        #timerDisplay, #scoreBoard, #startButton, #gameArea, h1 {
+            z-index: 10;
+            position: relative; 
+        }
+
+        h1 {
+            color: #4CAF50; /* Hijau */
+        }
+
+        #scoreBoard, #timerDisplay {
+            font-size: 1.5em;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+
+        #gameArea {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+            display: none; 
+        }
+
+        #question {
+            font-size: 3em;
+            margin-bottom: 20px;
+            color: #00796b; 
+        }
+
+        #answerInput {
+            padding: 10px;
+            font-size: 1.2em;
+            width: 60%;
+            text-align: center;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #startButton {
+            background-color: #4CAF50; 
+            color: white;
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+
+        #submitBtn {
+            background-color: #2196F3; 
+            color: white;
+        }
+
+        button:hover:not(:disabled) {
+            opacity: 0.9;
+        }
+        
+        button:disabled {
+            background-color: #aaa;
+            cursor: not-allowed;
+        }
+        
+        /* --- CSS ANIMASI LATAR BELAKANG --- */
+
+        .bubbles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0; 
+            overflow: hidden;
+        }
+
+        .bubbles li {
+            position: absolute;
+            list-style: none;
+            display: block;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(76, 175, 80, 0.2); 
+            animation: animate 25s linear infinite; 
+            bottom: -150px; 
+            border-radius: 50%; 
+        }
+
+        /* Variasi Gelembung (Hanya beberapa contoh) */
+        .bubbles li:nth-child(1) { left: 25%; width: 80px; height: 80px; animation-delay: 0s; }
+        .bubbles li:nth-child(2) { left: 10%; width: 20px; height: 20px; animation-delay: 2s; animation-duration: 12s; background-color: rgba(33, 150, 243, 0.3); } 
+        .bubbles li:nth-child(4) { left: 40%; width: 60px; height: 60px; animation-delay: 0s; animation-duration: 18s; }
+        .bubbles li:nth-child(6) { left: 75%; width: 110px; height: 110px; animation-delay: 3s; background-color: rgba(255, 152, 0, 0.3); } 
+
+        @keyframes animate {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; border-radius: 50%; }
+            100% { transform: translateY(-1000px) rotate(720deg); opacity: 0; border-radius: 10%; }
+        }
+    </style>
+</head>
+<body>
+
+    <ul class="bubbles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+
+    <audio id="startSound" preload="auto">
+        <source src="mulai.wav" type="audio/wav">
+        <source src="start.mp3" type="audio/mpeg">
+        Browser Anda tidak mendukung elemen audio.
+    </audio>
+    
+    <audio id="endSound" preload="auto">
+        <source src="selesai.ogg" type="audio/ogg"> 
+        <source src="end.mp3" type="audio/mpeg">
+    </audio>
+
+    <h1>Game Hitung Cepat Pertambahan</h1>
+    
+    <div id="timerDisplay">Waktu: 0 detik</div>
+    <div id="scoreBoard">Skor: 0</div>
+    
+    <button id="startButton">Mulai Permainan (30 Detik)</button>
+
+    <div id="gameArea">
+        <div id="question">? + ? =</div>
+        <input type="number" id="answerInput" placeholder="Jawaban Anda" autofocus>
+        <button id="submitBtn">Jawab</button>
+    </div>
+    
+    <script src="hitung_cepat.js"></script>
+
+</body>
+</html>
